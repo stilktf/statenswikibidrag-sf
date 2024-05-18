@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background-color: var(--secondary-background-color);
+            border-radius: 8px;
+            padding-left: 1rem;
+            text-decoration: none;
+        }
+
+        .card:hover {
+            background-color: var(--tertiary-background-color);
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <main>
+        <h1>Statens wikibidrag</h1>
+        <p>Nettsted som sporer endringer gjort av statlige IP-adresser på Wikipedia. Flagget indikerer hvilket Wikipedia endringen ble gjort på.</p>
+
+        <p>Antall endringer: {{ contribs|length }}</p>
+
+        <a href="{{ path("app_index_json_response") }}">Tilgjengelig i JSON-format.</a>
+        <br><br>
+        {# TODO: Sort descending #}
+        <div class="container">
+            {% for contrib in contribs|sort((a, b) => a.date < b.date) %}
+                <a href="{{ contrib.link }}" class="card">
+                    <p>{{ contrib.date|date }} • Artikkel {{ contrib.title }} • {% if contrib.wiki == "en" %}🇬🇧{% else %}🇳🇴{% endif %}</p>
+
+                    {% if contrib.comment %}
+                        <p>Kommentar: {{ contrib.comment }}</p>
+                    {% endif %}
+
+                    <p>Bidratt av: {{ contrib.body }}</p>
+                </a>
+            {% endfor %}
+        </div>
+    </main>
+{% endblock %}
