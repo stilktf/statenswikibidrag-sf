@@ -29,9 +29,7 @@
 
         <p>Antall endringer: {{ contribs|length }}</p>
 
-        <a href="{{ path("app_index_json_response") }}">Tilgjengelig i JSON-format.</a>
-        <br><br>
-        {# TODO: Sort descending #}
+        <p>Tilgjengelig i <a href="{{ path("app_index_json_response") }}">JSON-format</a> og på <a href="{{ path("app_index_rss_response") }}">RSS</a>.</p>
         <div class="container">
             {% for contrib in contribs|sort((a, b) => a.date < b.date) %}
                 <a href="{{ contrib.link }}" class="card">
