@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+        <title>Statens wikibidrag</title>
+        <link>https://statenswikibidrag.stilk.tf</link>
+        <description>Nettside som henter bidrag fra statlige IP-adresser på Wikipedia.</description>
+        {% for contribution in contributions|sort((b, a) => a.date < b.date) %}
+            <item>
+                <title>Bidrag fra {{ contribution.body }} på artikkel {{ contribution.title }}</title>
+                <link>{{ contribution.link }}</link>
+                <description>
+                    Et bidrag ble gjort {{ contribution.date|date }} av {{ contribution.body }} på artikkelen {{ contribution.title }}, med kommentar "{{ contribution.comment }}".
+                    Wikipedia: {{ contribution.wiki }}
+                    Lenke: {{ contribution.link }}
+                </description>
+            </item>
+        {% endfor %}
+    </channel>
+</rss>

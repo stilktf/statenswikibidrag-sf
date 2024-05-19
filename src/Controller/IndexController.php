@@ -31,4 +31,20 @@ class IndexController extends AbstractController
 
         return new JsonResponse($contributions);
     }
+
+    #[Route('/bidrag.rss')]
+    public function rss_response(ContributionGetter $contributionGetter, LoggerInterface $logger): Response
+    {
+        $contributions = $contributionGetter->getContributions();
+
+        $contents = $this->renderView("index/bidrag.rss.twig", [
+            'contributions' => $contributions,
+        ]);
+
+        $response = new Response($contents);
+
+        $response->headers->set('Content-Type', 'text/xml');
+
+        return $response;
+    }
 }
