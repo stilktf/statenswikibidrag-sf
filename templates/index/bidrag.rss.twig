@@ -3,8 +3,8 @@
     <channel>
         <title>Statens wikibidrag</title>
         <link>https://statenswikibidrag.stilk.tf</link>
-        <description>Nettside som henter bidrag fra statlige IP-adresser på Wikipedia.</description>
-        {% for contribution in contributions|sort((b, a) => a.date < b.date) %}
+        <description>Nettside som henter bidrag fra statlige IP-adresser på Wikipedia. I RSS får du de siste 5 bidragene.</description>
+        {% for contribution in contributions|sort((b, a) => b.date < a.date)|slice(0,5)|sort((a, b) => b.date < a.date) %}
             <item>
                 <title>Bidrag fra {{ contribution.body }} på artikkel {{ contribution.title }}</title>
                 <link>{{ contribution.link }}</link>
